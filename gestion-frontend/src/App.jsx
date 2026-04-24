@@ -11,7 +11,7 @@ function App() {
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', fontFamily: 'sans-serif' }}>
       <header style={{ textAlign: 'center', margin: '40px 0' }}>
-        <h1>Sistema de Gestión de Eventos 🚀</h1>
+        <h1>Sistema de Gestión de Eventos </h1>
       </header>
       
       <section>
