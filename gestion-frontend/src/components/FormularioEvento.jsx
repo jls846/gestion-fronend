@@ -10,7 +10,6 @@ const FormularioEvento = ({ onEventoCreado }) => {
         fecha: ''
     });
 
-    // Estado para controlar qué IDs de categorías han sido seleccionados
     const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
 
     const manejarCambio = (e) => {
@@ -18,33 +17,35 @@ const FormularioEvento = ({ onEventoCreado }) => {
         setEvento({ ...evento, [name]: value });
     };
 
-    // Agrega o remueve el ID del array dependiendo de si se marca o desmarca el checkbox
-   // Reemplaza esta función exacta en tu FormularioEvento.jsx
-const manejarCheckbox = (id) => {
-    setCategoriasSeleccionadas((prevSeleccionadas) => {
-        if (prevSeleccionadas.includes(id)) {
-            // Si ya estaba seleccionado, lo quitamos
-            return prevSeleccionadas.filter(cId => cId !== id);
-        } else {
-            // Si no estaba, lo agregamos al array anterior usando el operador spread (...)
-            return [...prevSeleccionadas, id];
-        }
-    });
-};
+    const manejarCheckbox = (id) => {
+        setCategoriasSeleccionadas((prevSeleccionadas) => {
+            if (prevSeleccionadas.includes(id)) {
+                return prevSeleccionadas.filter(cId => cId !== id);
+            } else {
+                return [...prevSeleccionadas, id];
+            }
+        });
+    };
+
     const enviarFormulario = async (e) => {
         e.preventDefault();
         
         try {
-            // CONVERSIÓN CLAVE: Transformamos [1, 2] en [ {id: 1}, {id: 2} ] para JPA
+            const fechaFormateada = evento.fecha && evento.fecha.length === 16 
+                ? `${evento.fecha}:00` 
+                : evento.fecha;
+
             const eventoConCategorias = {
                 ...evento,
+                fecha: fechaFormateada, // Pasamos la fecha con el formato que Jackson espera
+                capacidadMaxima: parseInt(evento.capacidadMaxima, 10), // Aseguramos que sea un Integer
                 categorias: categoriasSeleccionadas.map(id => ({ id: id }))
             };
 
-            // Ejecuta la función que viene desde App.jsx para hacer el POST al backend
+            // Enviamos el objeto con la estructura limpia a la función contenedora (Axios)
             await onEventoCreado(eventoConCategorias); 
             
-            // Limpiamos los campos del formulario tras el éxito
+            // Limpiamos el formulario tras un envío exitoso
             setEvento({ 
                 nombre: '', 
                 descripcion: '', 
@@ -53,7 +54,7 @@ const manejarCheckbox = (id) => {
                 organizador: '', 
                 fecha: '' 
             });
-            setCategoriasSeleccionadas([]); // Vaciamos los checkboxes
+            setCategoriasSeleccionadas([]); 
         } catch (error) {
             console.error("Error al enviar el formulario:", error);
         }
@@ -115,11 +116,13 @@ const manejarCheckbox = (id) => {
                 style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
             />
             
+            <label style={{ fontSize: '0.9rem', color: '#666', marginBottom: '-5px' }}>Fecha y Hora del Evento:</label>
             <input 
                 name="fecha" 
                 type="datetime-local" 
                 value={evento.fecha} 
                 onChange={manejarCambio} 
+                required
                 style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
             />
             
