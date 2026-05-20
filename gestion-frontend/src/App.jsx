@@ -4,7 +4,7 @@ import ListaEventos from './components/ListaEventos';
 import FormularioEvento from './components/FormularioEvento';
 import { RegistroUsuario } from './components/RegistroUsuario';
 
-// COMPONENTE NAVBAR INTEGRADO (Ahora recibe el nombre por props para actualizarse al instante)
+// COMPONENTE NAVBAR 
 const UserProfileNav = ({ username, onLogout }) => {
   const nombreMostrar = username || 'Usuario';
   const inicial = nombreMostrar.charAt(0).toUpperCase();
@@ -76,7 +76,7 @@ function App() {
   const [mostrarRegistro, setMostrarRegistro] = useState(false);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   
-  // NUEVO ESTADO: Sincroniza el nombre del usuario logueado con el Avatar
+  // Nombre del usuario logueado con el Avatar
   const [usuarioLogueado, setUsuarioLogueado] = useState(() => localStorage.getItem('usuarioLogueado') || '');
 
   const obtenerTodosLosEventos = () => {
@@ -136,7 +136,7 @@ function App() {
 
   const totalAsistentes = eventos.reduce((total, ev) => total + (ev.inscripciones?.length || 0), 0);
 
-  // VISTA SI NO ESTÁ LOGUEADO
+  // VISTA NO LOGUEADO
   if (!isLoggedIn) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f4f7f6', flexDirection: 'column' }}>
@@ -162,11 +162,11 @@ function App() {
     );
   }
 
-  // VISTA PRINCIPAL (LOGUEADO)
+  // VISTA PRINCIPAL
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       
-      {/* HEADER SUPERIOR ACTUALIZADO CON PERFIL DINÁMICO */}
+      
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
         <h1 style={{ margin: 0, color: '#333' }}>Gestión de Eventos</h1>
         
