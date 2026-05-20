@@ -4,6 +4,63 @@ import ListaEventos from './components/ListaEventos';
 import FormularioEvento from './components/FormularioEvento';
 import { RegistroUsuario } from './components/RegistroUsuario';
 
+// COMPONENTE NAVBAR INTEGRADO (Ahora recibe el nombre por props para actualizarse al instante)
+const UserProfileNav = ({ username, onLogout }) => {
+  const nombreMostrar = username || 'Usuario';
+  const inicial = nombreMostrar.charAt(0).toUpperCase();
+
+  return (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      gap: '12px',
+      backgroundColor: '#f8f9fa',
+      padding: '6px 14px',
+      borderRadius: '25px',
+      border: '1px solid #e9ecef'
+    }}>
+      {/* Avatar Circular con Inicial */}
+      <div style={{
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        backgroundColor: '#007bff',
+        color: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        fontSize: '1rem',
+        boxShadow: '0 2px 4px rgba(0,123,255,0.2)'
+      }}>
+        {inicial}
+      </div>
+
+      {/* Info del usuario y Botón de Salida */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <span style={{ fontSize: '0.9rem', fontWeight: '600', color: '#495057' }}>
+          {nombreMostrar}
+        </span>
+        <button 
+          onClick={onLogout} 
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            color: '#dc3545', 
+            fontSize: '0.75rem', 
+            padding: 0, 
+            cursor: 'pointer', 
+            textDecoration: 'underline',
+            marginTop: '-2px'
+          }}
+        >
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const StatCard = ({ title, value, icon }) => (
   <div style={{ padding: '20px', backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', textAlign: 'center', flex: 1 }}>
     <div style={{ fontSize: '1.2rem', color: '#666' }}>{icon} {title}</div>
@@ -17,9 +74,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('sesion_activa') === 'true');
   const [credentials, setCredentials] = useState({ user: '', pass: '' });
   const [mostrarRegistro, setMostrarRegistro] = useState(false);
-  
-  // NUENO ESTADO: Controla si el formulario de creación está abierto o cerrado
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  
+  // NUEVO ESTADO: Sincroniza el nombre del usuario logueado con el Avatar
+  const [usuarioLogueado, setUsuarioLogueado] = useState(() => localStorage.getItem('usuarioLogueado') || '');
 
   const obtenerTodosLosEventos = () => {
     axios.get(`http://localhost:8080/api/eventos`) 
@@ -41,9 +99,14 @@ function App() {
         password: credentials.pass
       });
       
+      const usernameBackend = respuesta.data.username || credentials.user;
+
       localStorage.setItem('usuario', JSON.stringify(respuesta.data)); 
-      localStorage.setItem('usuarioLogueado', respuesta.data.username);
+      localStorage.setItem('usuarioLogueado', usernameBackend);
       localStorage.setItem('sesion_activa', 'true');
+      
+      // Actualizamos los estados juntos para evitar desfases visuales
+      setUsuarioLogueado(usernameBackend);
       setIsLoggedIn(true);
     } catch {
       alert("Usuario o contraseña incorrectos");
@@ -58,7 +121,7 @@ function App() {
         capacidadMaxima: Number(nuevoEvento.capacidadMaxima)
       });
       alert("¡Evento creado con éxito!");
-      setMostrarFormulario(false); // Cerramos el formulario automáticamente al terminar
+      setMostrarFormulario(false);
       setRecargar(prev => prev + 1);
     } catch (error) {
       alert("Error: " + (error.response?.data || "No se pudo crear"));
@@ -67,6 +130,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUsuarioLogueado('');
     localStorage.clear(); 
   };
 
@@ -102,12 +166,12 @@ function App() {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       
-      {/* HEADER SUPERIOR CON DISEÑO PROFESIONAL */}
+      {/* HEADER SUPERIOR ACTUALIZADO CON PERFIL DINÁMICO */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
-        <h1>Gestión de Eventos</h1>
+        <h1 style={{ margin: 0, color: '#333' }}>Gestión de Eventos</h1>
         
-        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-          {/* BOTÓN DE CREAR EVENTO CON UN MÁS (+) */}
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          {/* BOTÓN DE CREAR EVENTO */}
           <button 
             onClick={() => setMostrarFormulario(!mostrarFormulario)}
             style={{ 
@@ -115,28 +179,28 @@ function App() {
               backgroundColor: mostrarFormulario ? '#6c757d' : '#28a745', 
               color: 'white', 
               border: 'none', 
-              borderRadius: '5px', 
+              borderRadius: '20px', 
               cursor: 'pointer',
               fontWeight: 'bold',
-              fontSize: '1rem',
+              fontSize: '0.95rem',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px'
+              gap: '8px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
             }}
           >
             {mostrarFormulario ? '✕ Cerrar' : '＋ Crear Evento'}
           </button>
 
-          <button onClick={handleLogout} style={{ padding: '10px 15px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-            Cerrar Sesión
-          </button>
+          {/* COMPONENTE DE PERFIL FLOTANTE CON LA PROP ENLAZADA */}
+          <UserProfileNav username={usuarioLogueado} onLogout={handleLogout} />
         </div>
       </header>
 
       {/* TARJETAS DE ESTADÍSTICAS */}
       <div style={{ display: 'flex', gap: '20px', margin: '30px 0' }}>
-        <StatCard title="Eventos en Sistema" value={eventos.length}/>
-        <StatCard title="Asistentes Totales" value={totalAsistentes} />
+        <StatCard title="Eventos en Sistema" value={eventos.length} icon="📅" />
+        <StatCard title="Asistentes Totales" value={totalAsistentes} icon="👥" />
       </div>
 
       {/* RENDERIZADO CONDICIONAL DEL FORMULARIO */}
@@ -153,7 +217,7 @@ function App() {
         </div>
       )}
 
-      {/* TABLA O LISTA DE EVENTOS (SIEMPRE VISIBLE) */}
+      {/* TABLA O LISTA DE EVENTOS */}
       <ListaEventos eventos={eventos} onCambio={() => setRecargar(prev => prev + 1)} />
     </div>
   );
