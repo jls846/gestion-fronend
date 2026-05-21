@@ -198,9 +198,9 @@ function App() {
       </header>
 
       {/* TARJETAS DE ESTADÍSTICAS */}
-      <div style={{ display: 'flex', gap: '20px', margin: '30px 0' }}>
-        <StatCard title="Eventos en Sistema" value={eventos.length} icon="📅" />
-        <StatCard title="Asistentes Totales" value={totalAsistentes} icon="👥" />
+      <div style={{ display: 'flex', gap: '20px', margin: '30px 0'}}>
+        <StatCard title="Eventos en Sistema" value={eventos.length} />
+        <StatCard title="Asistentes Totales" value={totalAsistentes} />
       </div>
 
       {/* RENDERIZADO CONDICIONAL DEL FORMULARIO */}
