@@ -1,0 +1,101 @@
+.event-form {
+    background: white;
+    border-radius: 16px;
+    padding: 35px;
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.15),
+        0 6px 6px rgba(0,0,0,0.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.event-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ed2553;
+    border-left: 5px solid #ed2553;
+    padding-left: 15px;
+    margin: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input {
+    padding: 14px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 16px;
+    transition: 0.3s;
+    outline: none;
+    background: transparent;
+}
+
+.form-group input:focus {
+    border-bottom: 2px solid #ed2553;
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+/* Categorías */
+
+.categorias-box {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #eee;
+}
+
+.categorias-title {
+    margin-bottom: 15px;
+    color: #444;
+    font-weight: bold;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: #444;
+    cursor: pointer;
+}
+
+/* Botón */
+
+.submit-btn {
+    background: #ed2553;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #d91c49;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(237, 37, 83, 0.25);
+}

@@ -1,0 +1,319 @@
+/* CONTENEDOR */
+
+.eventos-container{
+    padding: 25px;
+}
+
+/* TITULO */
+
+.titulo-eventos{
+    font-size: 2rem;
+    color: #262626;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* GRID */
+
+.eventos-grid{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* CARD */
+
+.evento-card{
+    background: white;
+    overflow: hidden;
+    display: flex;
+    min-height: 240px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
+    transition: 0.3s;
+}
+
+.evento-card:hover{
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 18px 35px rgba(0,0,0,0.15);
+}
+
+/* IMAGEN */
+
+.evento-imagen{
+    width: 320px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* CONTENIDO */
+
+.evento-content{
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+/* HEADER */
+
+.evento-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.evento-header h3{
+    margin: 0;
+    color: #262626;
+    font-size: 1.6rem;
+}
+
+/* BADGE */
+
+.organizador-badge{
+    background: #ed2553;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* DESCRIPCION */
+
+.evento-descripcion{
+    margin: 10px 0;
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* INFO */
+
+.evento-info{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.info-box{
+    background: #f5f5f5;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+/* CATEGORIAS */
+
+.categorias{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.categoria{
+    background: rgba(237,37,83,0.12);
+    color: #ed2553;
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* FOOTER */
+
+.evento-footer{
+    margin-top: 15px;
+}
+
+/* CUPO */
+
+.cupo{
+    color: black;
+    text-align: left;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+/* BOTONES */
+
+.botones{
+    display: flex;
+    gap: 12px;
+}
+
+/* BASE */
+
+.btn{
+    flex: 1;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* EDITAR */
+
+.btn-editar{
+    background: #ffc107;
+    color: #262626;
+}
+
+.btn-editar:hover{
+    background: #e0aa00;
+}
+
+/* INSCRIBIRSE */
+
+.btn-inscribirse{
+    background: #ed2553;
+    color: white;
+}
+
+.btn-inscribirse:hover{
+    background: #c81d45;
+}
+
+/* DISABLED */
+
+.btn-disabled{
+    background: #d6d6d6;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* MODAL */
+
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal{
+    background: white;
+    width: 100%;
+    max-width: 500px;
+
+    border-radius: 18px;
+    padding: 30px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+}
+
+.modal h3{
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #262626;
+}
+
+/* FORM */
+
+.modal form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal input,
+.modal textarea{
+    width: 100%;
+    padding: 14px;
+
+    border-radius: 10px;
+    border: 1px solid #ddd;
+
+    font-size: 1rem;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+.modal input:focus,
+.modal textarea:focus{
+    border-color: #ed2553;
+
+    box-shadow:
+        0 0 0 3px rgba(237,37,83,0.15);
+}
+
+/* BOTONES MODAL */
+
+.modal-buttons{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-cancelar{
+    background: #efefef;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-guardar{
+    background: #ed2553;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-guardar:hover{
+    background: #c81d45;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .evento-card{
+        flex-direction: column;
+    }
+
+    .evento-imagen{
+        width: 100%;
+        height: 220px;
+    }
+}
+
+@media(max-width:600px){
+
+    .botones{
+        flex-direction: column;
+    }
+
+    .evento-header{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

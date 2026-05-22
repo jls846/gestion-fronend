@@ -1,0 +1,277 @@
+/* Variables de Diseño */
+:root {
+  --content-width: 1000px;
+  --breakpoint: 799px;
+  --nav-height: 70px;
+
+  --primary-color: #ed2553;
+  --primary-dark: #c81d45;
+
+  --nav-background: #ffffff;
+  --nav-font-color: #333333;
+
+  --link-hover-color: #ed2553;
+
+  --border-color: #ececec;
+}
+
+/* Contenedor general */
+.navigation {
+  height: var(--nav-height);
+  background: var(--nav-background);
+  font-family: Arial, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  border-bottom: 1px solid var(--border-color);
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Logo y marca */
+.brand {
+  position: absolute;
+  padding-left: 20px;
+  float: left;
+  line-height: var(--nav-height);
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.brand a,
+.brand a:visited {
+  color: var(--nav-font-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Menú de Navegación */
+nav {
+  float: right;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  float: left;
+  position: relative;
+}
+
+nav ul li a,
+nav ul li a:visited {
+  display: block;
+  padding: 0 20px;
+  line-height: var(--nav-height);
+
+  background: var(--nav-background);
+  color: var(--nav-font-color);
+
+  text-decoration: none;
+  transition: 0.3s ease;
+
+  font-weight: 500;
+}
+
+nav ul li a:hover {
+  color: white;
+  background: var(--primary-color);
+}
+
+/* Indicador de flecha para los Dropdowns */
+.dropdown-wrapper > a:not(:only-child):after {
+  padding-left: 6px;
+  content: ' ▾';
+}
+
+/* Lista del menú desplegable (Dropdown) */
+.nav-dropdown {
+  position: absolute;
+  display: none;
+  z-index: 1;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  background: var(--nav-background);
+  min-width: 190px;
+}
+
+.nav-dropdown li {
+  width: 100%;
+}
+
+.nav-dropdown li a {
+  padding: 15px;
+  line-height: 20px;
+}
+
+/* Caja del Perfil e Iniciales del Usuario */
+.user-profile-item {
+  display: flex;
+  align-items: center;
+  height: var(--nav-height);
+  padding: 0 15px;
+}
+
+.user-profile-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background-color: #fff5f8;
+
+  padding: 6px 14px;
+
+  border-radius: 25px;
+
+  border: 1px solid #ffd4df;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--nav-font-color);
+  line-height: 1.2;
+}
+
+.user-role {
+  font-size: 0.7rem;
+  color: #b0b0b0;
+}
+
+/* Modos Móviles (Responsive) */
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--nav-background);
+  height: var(--nav-height);
+  width: var(--nav-height);
+}
+
+@media only screen and (max-width: 798px) {
+  .nav-mobile {
+    display: block;
+  }
+
+  nav {
+    width: 100%;
+    padding: var(--nav-height) 0 0px;
+  }
+
+  nav ul.nav-list {
+    display: none; /* Se activa con el estado de React */
+  }
+
+  nav ul li {
+    float: none;
+  }
+
+  nav ul li a {
+    padding: 15px;
+    line-height: 20px;
+  }
+
+  .nav-dropdown {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .nav-dropdown li a {
+    padding-left: 30px;
+    background: #1e1e1e !important;
+  }
+
+  .user-profile-item {
+    height: auto;
+    padding: 15px;
+    background: var(--nav-background);
+  }
+  
+  .user-profile-box {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 799px) {
+  .nav-list {
+    display: block !important;
+  }
+  .dropdown-wrapper:hover .nav-dropdown {
+    display: block; /* En escritorio se despliega con hover automáticamente */
+  }
+}
+
+/* Animación Icono Hamburguesa */
+#nav-toggle {
+  position: absolute;
+  left: 18px;
+  top: 22px;
+  cursor: pointer;
+  padding: 10px 35px 16px 0px;
+}
+
+#nav-toggle span,
+#nav-toggle span:before,
+#nav-toggle span:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 4px;
+  width: 28px;
+  background: var(--nav-font-color);
+  position: absolute;
+  display: block;
+  content: '';
+  transition: all 300ms ease-in-out;
+}
+
+#nav-toggle span:before {
+  top: -8px;
+}
+
+#nav-toggle span:after {
+  bottom: -8px;
+}
+
+#nav-toggle.active span {
+  background-color: transparent;
+}
+
+#nav-toggle.active span:before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+#nav-toggle.active span:after {
+  top: 0;
+  transform: rotate(-45deg);
+}
