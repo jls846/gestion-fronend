@@ -5,7 +5,6 @@ import {
     PlusCircle,
     BarChart3,
     Pencil,
-    History,
     LogOut,
     User,
     CalendarDays,
@@ -244,7 +243,6 @@ const Navbar = ({
                                 </li>
 
                                 {/* ESTADÍSTICAS */}
-
                                 <li>
 
                                     <a
@@ -274,26 +272,6 @@ const Navbar = ({
                                 </li>
 
                             </ul>
-
-                        </li>
-
-                        {/* HISTORIAL */}
-
-                        <li>
-
-                            <a href="#!">
-
-                                <History size={18} />
-
-                                <span
-                                    style={{
-                                        marginLeft: '8px'
-                                    }}
-                                >
-                                    Historial
-                                </span>
-
-                            </a>
 
                         </li>
 
