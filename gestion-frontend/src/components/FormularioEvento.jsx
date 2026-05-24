@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './FormularioEvento.css';
 
 const FormularioEvento = ({ onEventoCreado }) => {
@@ -13,6 +13,15 @@ const FormularioEvento = ({ onEventoCreado }) => {
     });
 
     const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
+
+    const [categorias, setCategorias] = useState([]);
+//MODIFIQUE PARA CARGAR LAS CATEGORIAS DESDE LA API
+useEffect(() => {
+    fetch('http://localhost:8080/api/categorias')
+        .then(res => res.json())
+        .then(data => setCategorias(data))
+        .catch(err => console.error(err));
+}, []);
 
     const manejarCambio = (e) => {
 
@@ -174,32 +183,19 @@ const FormularioEvento = ({ onEventoCreado }) => {
                 <div className="categorias-title">
                     Categorías del Evento
                 </div>
-
-                <div className="checkbox-group">
-
-                    <label className="checkbox-item">
-
+{/* SE REEMPLAZO LAS CATEGORIAS HARDCODEADAS*/}
+            <div className="checkbox-group">
+                {categorias.map((cat) => (
+                    <label className="checkbox-item" key={cat.id}>
                         <input
-                            type="checkbox"
-                            checked={categoriasSeleccionadas.includes(1)}
-                            onChange={() => manejarCheckbox(1)}
+                        type="checkbox"
+                        checked={categoriasSeleccionadas.includes(cat.id)}
+                        onChange={() => manejarCheckbox(cat.id)}
                         />
-
-                        Tecnología
+                        {cat.categoria}
                     </label>
-
-                    <label className="checkbox-item">
-
-                        <input
-                            type="checkbox"
-                            checked={categoriasSeleccionadas.includes(2)}
-                            onChange={() => manejarCheckbox(2)}
-                        />
-
-                        Educación
-                    </label>
-
-                </div>
+                ))}
+            </div>
 
             </div>
 
